@@ -11,7 +11,6 @@ def clicar_elemento_por_xpath(navegador, xpath):
     elemento.click()
     time.sleep(2)
 
-
 def clicar_elemento_por_xpath_com_visibilidade(navegador, xpath):
     elemento = WebDriverWait(navegador, 10).until(
         EC.visibility_of_all_elements_located((By.XPATH, xpath))
@@ -37,7 +36,7 @@ def selecionar_ano_mes_por_pesquisa(navegador, mes_ano):
     clicar_elemento_por_xpath_com_visibilidade(navegador, '//*[@id="selectTabelaReferenciacarro_chosen"]/div/ul')
 
 def selecionar_ano_mes_por_posicao(navegador, posicao):
-    opcoes_mes_ano = lista_elementos_visiveis_por_xpath(navegador, '//*[@id="selectTabelaReferenciacarro_chosen"]/div/ul')
+    opcoes_mes_ano = lista_elementos_visiveis_por_xpath(navegador, '//*[@id="selectTabelaReferenciacarro_chosen"]/div/ul') 
     lista_elementos = opcoes_mes_ano[0].find_elements(By.CSS_SELECTOR, 'li')
     lista_elementos[posicao].click()
 
@@ -46,9 +45,19 @@ def selecionar_marca_por_pesquisa(navegador, marca):
     clicar_elemento_por_xpath_com_visibilidade(navegador, '//*[@id="selectMarcacarro_chosen"]/div/ul')
 
 def selecionar_marca_por_posicao(navegador, posicao):
-    opcoes_marca = lista_elementos_visiveis_por_xpath(navegador, '//*[@id="selectMarcacarro_chosen"]/div/ul')
+    opcoes_marca = lista_elementos_visiveis_por_xpath(navegador, '//*[@id="selectAnoModelocarro"]/div/ul')
     lista_elementos = opcoes_marca[0].find_elements(By.CSS_SELECTOR, 'li')
     lista_elementos[posicao].click()
+
+def selecionar_modelo_por_pesquisa(navegador, modelo):
+    preencher_barra_de_pesquisa(navegador, modelo, '//*[@id="selectAnocarro_chosen"]/div/div/input')
+    clicar_elemento_por_xpath_com_visibilidade(navegador, '//*[@id="selectAnocarro_chosen"]/div/ul')
+
+def selecionar_modelo_por_posicao(navegador, posicao):
+    opcoes_modelo = lista_elementos_visiveis_por_xpath(navegador, '//*[@id="selectAnocarro_chosen"]/div/ul')
+    lista_elementos = opcoes_modelo[0].find_elements(By.CSS_SELECTOR, 'li')
+    lista_elementos[posicao].click()
+
 
 # Inicializa o navegador
 navegador = webdriver.Edge()
@@ -61,6 +70,8 @@ navegador.get("https://veiculos.fipe.org.br/")
 # 1) Clicar em 'Consulta de carros e utilitários pequenos'
 clicar_elemento_por_xpath(navegador, '//*[@id="front"]/div[1]/div[2]/ul/li[1]/a')
 
+##############################
+
 # 2) Cliacar na caixa mês/ano
 clicar_elemento_por_xpath(navegador, '//*[@id="selectTabelaReferenciacarro_chosen"]')
 
@@ -70,14 +81,33 @@ clicar_elemento_por_xpath(navegador, '//*[@id="selectTabelaReferenciacarro_chose
 # Selecionar por posição e clicar
 selecionar_ano_mes_por_posicao(navegador, 1)
 
-# 3) marca
-clicar_elemento_por_xpath(navegador, '//*[@id="selectMarcacarro_chosen"]')
+##############################
 
-#selecionar_marca_por_pesquisa(navegador, 'BYD')
-selecionar_marca_por_posicao(navegador,2)
+# 3) Clicar na caixa marca
+clicar_elemento_por_xpath(navegador, '//*[@id="selectAnoModelocarro"]') 
 
-# 4) modelo
-# 5) ano/modelo
+# Pesquisar marca e clicar
+#selecionar_marca_por_pesquisa(navegador, 'marca')
+
+#selecionar marca por posição e clicar
+selecionar_marca_por_posicao(navegador, 2)
+
+##############################
+
+# 4) Clicar na caixa modelo
+clicar_elemento_por_xpath(navegador, '//*[@id="selectAnoModelocarro"]')
+
+# Pesquisar modelo e clicar
+#selecionar_modelo_por_pesquisa(navegador, 'modelo')
+
+#selecionar modelo por posição e clicar
+selecionar_modelo_por_posicao(navegador,3)
+
+##############################
+
 # 6) pesquisar 
+
+##############################
+
 # 7) salvar dados da tabela em um dicionário
 time.sleep(10)
