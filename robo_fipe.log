@@ -1,0 +1,84 @@
+2025-12-31 17:26:05,469 - INFO - Iniciando configurações do navegador...
+2025-12-31 17:26:07,924 - INFO - Acessando site da FIPE...
+2025-12-31 17:26:13,210 - INFO - Selecionando opção: dezembro/2025
+2025-12-31 17:26:16,748 - INFO - Selecionando opção: CAB Motors
+2025-12-31 17:26:20,273 - INFO - Selecionando opção: Stark Superação 2.3 AWD 2.3 TDI Die. 3p
+2025-12-31 17:26:23,732 - WARNING - Índice 2 não existe na lista.
+2025-12-31 17:26:23,732 - INFO - Pesquisando valores...
+2025-12-31 17:26:24,813 - ERROR - Erro ao clicar em //*[@id="buttonPesquisarcarro"]: Message: element click intercepted: Element <a href="javascript:void(0)" class="text" id="buttonPesquisarcarro">...</a> is not clickable at point (507, 624). Other element would receive the click: <li class="active-result highlighted" data-option-array-index="1" style="">...</li>
+  (Session info: MicrosoftEdge=143.0.3650.96); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff7aea087d5
+	0x7ff7ae978e44
+	0x7ff7aed631f2
+	0x7ff7ae7d8789
+	0x7ff7ae7d6e20
+	0x7ff7ae7d4dd7
+	0x7ff7ae7d4321
+	0x7ff7ae7ca9e6
+	0x7ff7ae7f23ea
+	0x7ff7ae7ca2e5
+	0x7ff7ae7ca1fd
+	0x7ff7ae7ca2e5
+	0x7ff7ae80c8de
+	0x7ff7ae7c982a
+	0x7ff7ae7c8b33
+	0x7ff7ae7c9653
+	0x7ff7ae8b22e4
+	0x7ff7ae8c109c
+	0x7ff7ae8bac7f
+	0x7ff7aea99b37
+	0x7ff7ae9846a6
+	0x7ff7ae97eab4
+	0x7ff7ae97ebf9
+	0x7ff7ae972cbd
+	0x7ffbd683e8d7
+	0x7ffbd7d0c53c
+
+2025-12-31 17:26:25,027 - INFO - Screenshot do erro salvo em: erros/2025-12-31_17-26-24_erro_clique.png
+2025-12-31 17:26:25,027 - CRITICAL - Falha fatal no fluxo: Message: element click intercepted: Element <a href="javascript:void(0)" class="text" id="buttonPesquisarcarro">...</a> is not clickable at point (507, 624). Other element would receive the click: <li class="active-result highlighted" data-option-array-index="1" style="">...</li>
+  (Session info: MicrosoftEdge=143.0.3650.96); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#elementclickinterceptedexception
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff7aea087d5
+	0x7ff7ae978e44
+	0x7ff7aed631f2
+	0x7ff7ae7d8789
+	0x7ff7ae7d6e20
+	0x7ff7ae7d4dd7
+	0x7ff7ae7d4321
+	0x7ff7ae7ca9e6
+	0x7ff7ae7f23ea
+	0x7ff7ae7ca2e5
+	0x7ff7ae7ca1fd
+	0x7ff7ae7ca2e5
+	0x7ff7ae80c8de
+	0x7ff7ae7c982a
+	0x7ff7ae7c8b33
+	0x7ff7ae7c9653
+	0x7ff7ae8b22e4
+	0x7ff7ae8c109c
+	0x7ff7ae8bac7f
+	0x7ff7aea99b37
+	0x7ff7ae9846a6
+	0x7ff7ae97eab4
+	0x7ff7ae97ebf9
+	0x7ff7ae972cbd
+	0x7ffbd683e8d7
+	0x7ffbd7d0c53c
+
+2025-12-31 17:26:25,154 - INFO - Screenshot do erro salvo em: erros/2025-12-31_17-26-25_erro_fatal.png
+2025-12-31 17:26:25,154 - INFO - Fechando navegador.
+2025-12-31 17:26:27,441 - WARNING - Nenhum dado para salvar.
+2025-12-31 17:26:38,430 - INFO - Iniciando configurações do navegador...
+2025-12-31 17:26:40,550 - INFO - Acessando site da FIPE...
+2025-12-31 17:26:44,989 - INFO - Selecionando opção: dezembro/2025
+2025-12-31 17:26:48,316 - INFO - Selecionando opção: CAB Motors
+2025-12-31 17:26:52,083 - INFO - Selecionando opção: Stark Superação 2.3 AWD 2.3 TDI Die. 3p
+2025-12-31 17:26:55,431 - INFO - Selecionando opção: 2021 Diesel
+2025-12-31 17:26:57,835 - INFO - Pesquisando valores...
+2025-12-31 17:27:02,290 - INFO - Extraindo dados da tabela...
+2025-12-31 17:27:02,906 - INFO - Dados extraídos com sucesso!
+2025-12-31 17:27:02,906 - INFO - Fechando navegador.
+2025-12-31 17:27:05,190 - INFO - Dados salvos com sucesso em fipe_resultado.json
