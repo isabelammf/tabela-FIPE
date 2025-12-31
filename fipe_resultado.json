@@ -1,10 +1,22 @@
-{
-    "Mês de referência": "dezembro de 2025",
-    "Código Fipe": "094002-0",
-    "Marca": "CAB Motors",
-    "Modelo": "Stark Superação 2.3 AWD 2.3 TDI Die. 3p",
-    "Ano Modelo": "2021 Diesel",
-    "Autenticação": "kfb16d5910dj2",
-    "Data da consulta": "quarta-feira, 31 de dezembro de 2025 17:26",
-    "Preço Médio": "R$ 187.656,00"
-}
+[
+    {
+        "Mês de referência": "dezembro de 2025",
+        "Código Fipe": "094002-0",
+        "Marca": "CAB Motors",
+        "Modelo": "Stark Superação 2.3 AWD 2.3 TDI Die. 3p",
+        "Ano Modelo": "2021 Diesel",
+        "Autenticação": "kfb16d5910dj2",
+        "Data da consulta": "quarta-feira, 31 de dezembro de 2025 17:26",
+        "Preço Médio": "R$ 187.656,00"
+    },
+    {
+        "Mês de referência": "dezembro de 2025",
+        "Código Fipe": "006002-0",
+        "Marca": "Alfa Romeo",
+        "Modelo": "145 Quadrifoglio 2.0",
+        "Ano Modelo": "1998 Gasolina",
+        "Autenticação": "pdr6cjzl9f",
+        "Data da consulta": "quarta-feira, 31 de dezembro de 2025 18:15",
+        "Preço Médio": "R$ 29.292,00"
+    }
+]

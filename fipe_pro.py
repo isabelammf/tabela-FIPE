@@ -11,6 +11,7 @@ from selenium.webdriver.common.by import By  # Para localizar elementos (por ID,
 from selenium.webdriver.support.ui import WebDriverWait  # Para esperar elementos carregarem
 from selenium.webdriver.support import expected_conditions as EC  # Condições de espera (ex: estar clicável)
 from selenium.webdriver.edge.options import Options  # Para configurar o navegador Edge
+from selenium.webdriver.common.keys import Keys  # Para enviar teclas (ex: ENTER)
 
 # --- CONFIGURAÇÃO DE LOGS ---
 # Aqui definimos que o robô vai escrever o que faz tanto num arquivo .log quanto na tela preta.
@@ -81,6 +82,73 @@ class FipeBot:
             logging.error(f"Erro ao clicar em {xpath}: {e}")
             self._tirar_screenshot("erro_clique") 
             raise
+    
+    def _pesquisar_e_selecionar(self, id_elemento_pai, texto_buscado):
+        """
+        1. Clica no Dropdown.
+        2. Digita o texto no campo de input.
+        3. Aperta ENTER.
+        """
+        try:
+            logging.info(f"Digitando '{texto_buscado}'...")
+            
+            # Clica no container principal para abrir (Ex: selectMarcacarro_chosen)
+            # Usamos o ID direto pois é mais estável que XPaths longos
+            dropdown = self.wait.until(EC.element_to_be_clickable((By.ID, id_elemento_pai)))
+            dropdown.click()
+            
+            # Encontra o campo de input DENTRO desse dropdown
+            # O input sempre fica dentro de: div > div > input
+            campo_busca = dropdown.find_element(By.TAG_NAME, "input")
+            
+            # 3. Limpa, Digita e aperta Enter
+            campo_busca.clear()
+            campo_busca.send_keys(texto_buscado)
+            sleep(0.5) # Espera o filtro visual acontecer
+            campo_busca.send_keys(Keys.RETURN) # Aperta ENTER
+            
+            sleep(1) # Espera o site carregar o próximo campo
+
+        except Exception as e:
+            logging.error(f"Erro ao pesquisar '{texto_buscado}': {e}")
+            self._tirar_screenshot(f"erro_busca_{texto_buscado}")
+            raise
+
+    def consultar_carro_pesquisa(self, dados_busca):
+        try:
+            logging.info("Acessando site da FIPE...")
+            self.driver.get(self.url)
+            
+            # 1. Aba Carros
+            self._clicar('//*[@id="front"]/div[1]/div[2]/ul/li[1]/a')
+
+            # --- AQUI ESTÁ A MUDANÇA ---
+            # Agora passamos o ID do elemento pai (sem o #) e o texto
+            
+            # 2. Referência
+            self._pesquisar_e_selecionar('selectTabelaReferenciacarro_chosen', dados_busca[0])
+
+            # 3. Marca
+            self._pesquisar_e_selecionar('selectMarcacarro_chosen', dados_busca[1])
+
+            # 4. Modelo
+            self._pesquisar_e_selecionar('selectAnoModelocarro_chosen', dados_busca[2])
+
+            # 5. Ano
+            self._pesquisar_e_selecionar('selectAnocarro_chosen', dados_busca[3])
+
+            # 6. Botão Pesquisar
+            logging.info("Pesquisando valores...")
+            self._clicar('//*[@id="buttonPesquisarcarro"]')
+            sleep(3)
+
+            return self._extrair_dados()
+
+        except Exception as e:
+            logging.critical(f"Falha fatal no fluxo: {e}")
+            self._tirar_screenshot("erro_fatal")
+        finally:
+            self.encerrar()
 
     def _selecionar_opcao_index(self, xpath_lista, index):
         """ 
@@ -106,7 +174,7 @@ class FipeBot:
             self._tirar_screenshot("erro_selecao")
             raise
 
-    def consultar_carro(self, indices):
+    def consultar_carro_index(self, indices):
         """
         Executa o passo a passo completo da consulta.
         :param indices: Lista de números [Ref, Marca, Modelo, Ano]
@@ -188,18 +256,21 @@ class FipeBot:
             self._tirar_screenshot("erro_extracao_conteudo")
             return None
 
-    def salvar_json(self, dados, nome_arquivo="fipe_resultado.json"):
+    def salvar_json(self, novo_dado, nome_arquivo="fipe_resultado.json"):
         """ Salva o dicionário num arquivo .json bonito e legível. """
-        if dados:
-            # Abre o arquivo em modo de escrita ('w') com suporte a acentos (utf-8)
-            with open(nome_arquivo, 'w', encoding='utf-8') as f:
-                # dump: escreve os dados no arquivo
-                # indent=4: deixa o arquivo organizado com identação
-                # ensure_ascii=False: permite salvar acentos (ç, é, ã) corretamente
-                json.dump(dados, f, indent=4, ensure_ascii=False)
-            logging.info(f"Dados salvos com sucesso em {nome_arquivo}")
-        else:
-            logging.warning("Nenhum dado para salvar.")
+        if not novo_dado: return
+        lista_dados = []
+        if os.path.exists(nome_arquivo):
+            try:
+                with open(nome_arquivo, 'r', encoding='utf-8') as f:
+                    conteudo = json.load(f)
+                    lista_dados = conteudo if isinstance(conteudo, list) else [conteudo]
+            except: pass
+        
+        lista_dados.append(novo_dado)
+        with open(nome_arquivo, 'w', encoding='utf-8') as f:
+            json.dump(lista_dados, f, indent=4, ensure_ascii=False)
+        logging.info(f"Salvo em {nome_arquivo}")
 
     def encerrar(self):
         """ Fecha o navegador para liberar memória do computador. """
@@ -214,10 +285,18 @@ if __name__ == "__main__":
     # 2. Define quais opções queremos selecionar em cada passo
     # Lista: [Mês Referência, Marca, Modelo, Ano]
     # Obs: Os números são os índices (0 é o primeiro da lista)
-    indices_busca = [0, 12, 1, 0] 
+    #indices_busca = [0, 12, 1, 0] 
+
+    parametros = [
+        "dezembro/2025", 
+        "Alfa Romeo", 
+        "145 Quadrifoglio 2.0", 
+        "1998 Gasolina"
+    ]
     
     # 3. Manda o robô trabalhar
-    resultado = bot.consultar_carro(indices_busca)
+    #resultado = bot.consultar_carro_index(indices_busca)
+    resultado = bot.consultar_carro_pesquisa(parametros)
     
     # 4. Salva o resultado final
     bot.salvar_json(resultado)
